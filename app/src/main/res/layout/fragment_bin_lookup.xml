@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+		<import type="android.view.View"/>
+		<variable
+			name="viewModel"
+			type="com.example.testcft.viewmodel.MainViewModel" />
+	</data>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		tools:context=".fragment.BinLookupFragment">
+
+		<RelativeLayout
+			android:layout_marginHorizontal="20dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<TextView
+				android:id="@+id/descriptionTxt"
+				style="@style/TextView.TextKey"
+				android:layout_marginTop="15dp"
+				android:layout_marginBottom="15dp"
+				android:layout_centerHorizontal="true"
+				android:text="Enter the first 6-8 digits of the card">
+			</TextView>
+
+			<RelativeLayout
+				android:id="@+id/lookupLayout"
+				android:layout_below="@id/descriptionTxt"
+				android:layout_marginBottom="15dp"
+				android:paddingHorizontal="5dp"
+				android:layout_centerHorizontal="true"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+				<EditText
+					android:id="@+id/binTxt"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:background="@drawable/edit_text_background"
+					android:layout_centerVertical="true"
+					android:padding="8dp"
+					android:hint="Enter BIN"
+					android:text="@={viewModel.bin}"
+					android:maxLength="8"
+					android:inputType="number" />
+
+				<Button
+					android:id="@+id/lookupBtn"
+					android:layout_marginStart="10dp"
+					android:layout_width="wrap_content"
+					android:layout_height="50dp"
+					android:layout_centerVertical="true"
+					android:text="Search"
+					android:textSize="10sp"
+					android:textColor="@color/black"
+					android:layout_toEndOf="@+id/binTxt"
+					android:onClick="@{() -> viewModel.getCardData()}">
+				</Button>
+			</RelativeLayout>
+
+			<ProgressBar
+				android:id="@+id/progressbar"
+				android:layout_below="@id/lookupLayout"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:visibility="@{viewModel.isLoading == true ? View.VISIBLE : View.GONE}" />
+
+			<RelativeLayout
+				android:id="@+id/schemeLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.scheme != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/lookupLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Scheme">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.scheme}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/typeLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.type != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/schemeLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Type">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.type}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/brandLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.brand != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/typeLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Brand">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.brand}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/prepaidLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.prepaid != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/brandLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Prepaid">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.prepaid == true ? `Yes` : `No`}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/numberLengthLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.number.length != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/prepaidLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Number Length">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.number.length.toString()}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/numberLuhnLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.number.luhn != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/numberLengthLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Number Luhn">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.number.luhn == true ? `Yes` : `No`}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/countryNumericLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.country.numeric != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/numberLuhnLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Country numeric">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.country.numeric}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/countryAlpha2Layout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.country.alpha2 != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/countryNumericLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Country alpha2">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.country.alpha2}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/countryNameLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.country.name != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/countryAlpha2Layout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Country name">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.country.name}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/countryEmojiLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.country.emoji != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/countryNameLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Country emoji">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.country.emoji}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/countryCurrencyLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.country.currency != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/countryEmojiLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Country currency">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.country.currency}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/countryCoordinatesLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.country.latitude != null &amp; viewModel.card.country.longitude != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/countryCurrencyLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Country coordinates">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:textColor="@color/teal_200"
+					android:autoLink="map"
+					android:onClick="@{() -> viewModel.openMap()}"
+					android:text="@{viewModel.card.country.latitude.toString() + `, ` + viewModel.card.country.longitude.toString()}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/bankNameLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.bank.name != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/countryCoordinatesLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Bank name">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.bank.name}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/bankUrlLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.bank.url != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/bankNameLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Bank url">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:autoLink="web"
+					android:text="@{viewModel.card.bank.url}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/bankPhoneLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.bank.phone != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/bankUrlLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Bank phone">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:autoLink="phone"
+					android:text="@{viewModel.card.bank.phone}">
+				</TextView>
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/bankCityLayout"
+				style="@style/RelativeHorizontal"
+				android:visibility="@{viewModel.card.bank.city != null ? View.VISIBLE : View.GONE}"
+				android:layout_below="@id/bankPhoneLayout">
+
+				<TextView
+					style="@style/TextView.TextKey"
+					android:text="Bank city">
+				</TextView>
+
+				<TextView
+					style="@style/TextView.TextValue"
+					android:text="@{viewModel.card.bank.city}">
+				</TextView>
+			</RelativeLayout>
+
+		</RelativeLayout>
+	</ScrollView>
+</layout>

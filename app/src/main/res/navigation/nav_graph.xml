@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/nav_graph"
+	app:startDestination="@id/binLookupFragment">
+
+	<fragment
+		android:id="@+id/binLookupFragment"
+		android:name="com.example.testcft.fragment.BinLookupFragment"
+		tools:layout="@layout/fragment_bin_lookup"
+		android:label="Bin Lookup" >
+		<action
+			android:id="@+id/action_binLookupFragment_to_binLookupHistoryFragment"
+			app:destination="@id/binLookupHistoryFragment"
+			app:enterAnim="@anim/slide_left_enter"
+			app:exitAnim="@anim/slide_left_exit"
+			app:popEnterAnim="@anim/slide_right_enter"
+			app:popExitAnim="@anim/slide_right_exit"
+			app:launchSingleTop="false" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/binLookupHistoryFragment"
+		android:name="com.example.testcft.fragment.BinLookupHistoryFragment"
+		tools:layout="@layout/fragment_bin_lookup_history"
+		android:label="History" />
+</navigation>

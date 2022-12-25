@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+	<data>
+		<variable
+			name="bin"
+			type="String" />
+		<variable
+			name="time"
+			type="String" />
+	</data>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingVertical="10dp"
+		android:paddingHorizontal="20dp">
+
+		<TextView
+			style="@style/TextView.TextValue"
+			android:text="@{bin}">
+		</TextView>
+
+		<TextView
+			style="@style/TextView.TextKey"
+			android:text="@{time}">
+		</TextView>
+	</RelativeLayout>
+</layout>
